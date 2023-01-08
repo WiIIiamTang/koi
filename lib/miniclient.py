@@ -15,20 +15,18 @@ class MiniClient:
         if self.token is None:
             raise ValueError("Token is None")
 
-    def handle_exceptions(self, func):
+    def handle_exceptions(func, logger=logging.getLogger(__name__)):
         def wrapper(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
             except Exception as e:
-                self.logger.exception(e)
+                logger.exception(e)
 
         return wrapper
 
-    def timebreak(self, func, seconds=1):
+    def timebreak(func, seconds=1):
         def wrapper(*args, **kwargs):
-            if not self.first_time:
-                time.sleep(seconds)
-                self.first_time = False
+            time.sleep(seconds)
             return func(*args, **kwargs)
 
         return wrapper
