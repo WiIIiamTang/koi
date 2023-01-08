@@ -71,13 +71,15 @@ def koi_precheck():
     return Response(
         json.dumps(
             {
-                "status": "success",
-                "message": "Precheck successful",
+                "status": "success" if save_success else "error",
+                "message": f"Precheck {'failed' if not save_success else 'succeeded'}",
                 "timestarted": timenow,
                 "timefinished": timefinished,
             }
         ),
-        status=200,
+        status=200
+        if save_success
+        else 500,  # use error code to abort if precheck fails
         mimetype="application/json",
     )
 
