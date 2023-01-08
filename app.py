@@ -56,7 +56,7 @@ def koi_precheck():
     tasks.notify_precheck_start(
         logger=logging.getLogger("precheck"),
         client=client,
-        message=f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",  # noqa
+        message=f"New commit was pushed for release: `{data['commit_sha']}` `{data['commit_message']}` - starting precheck tasks",  # noqa
     )
     # tasks.save_bot_data(logger=logging.getLogger("precheck"), client=client)
     save_success = True
@@ -104,6 +104,9 @@ def koi_postcheck():
     timenow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # get the data from the request
     data = request.get_json()
+    if type(data) is not dict:
+        data = json.loads(data)
+
     logging.info(f"Bot is starting up at {data.get('time_started')}")
     logging.info("Waiting 20 seconds for bot to start up...")
     time.sleep(20)
@@ -115,6 +118,9 @@ def koi_postcheck():
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if response:
+        client.send_message(
+            message="All messages will be deleted in a couple of hours. Happy release!"
+        )
         return Response(
             json.dumps(
                 {
@@ -128,6 +134,9 @@ def koi_postcheck():
             mimetype="application/json",
         )
     else:
+        client.send_message(
+            message="I didn't detect the bot online. It looks like the release failed?"
+        )
         return Response(
             json.dumps(
                 {
