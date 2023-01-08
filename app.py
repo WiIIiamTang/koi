@@ -1,6 +1,7 @@
 import json
 import os
 import logging
+import time
 from datetime import datetime
 from dotenv import load_dotenv
 from flask import Flask, request, Response
@@ -17,7 +18,7 @@ logging.basicConfig(
 app = Flask(__name__)
 client = miniclient.MiniClient(
     logger=logging.getLogger("miniclient"),
-    token=os.environ.get("AUTH_TOKEN"),
+    token=os.environ.get("DISCORD_AUTH_TOKEN"),
     default_channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
 )
 
@@ -50,8 +51,9 @@ def koi_precheck():
 
     # start precheck
     tasks.notify_precheck_start(
-        client,
-        f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",
+        logger=logging.getLogger("precheck"),
+        client=client,
+        message=f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",
     )
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -90,9 +92,11 @@ def koi_postcheck():
     # get the data from the request
     data = request.get_json()
     logging.info(f"Bot is starting up at {data.get('time_started')}")
+    logging.info("Waiting 20 seconds for bot to start up...")
+    time.sleep(20)
 
     # start postcheck
-    response = tasks.check_bot_startup_ready(
+    response = tasks.handle_check_bot_startup(
         logger=logging.getLogger("postcheck"), client=client
     )
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
