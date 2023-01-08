@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from dotenv import load_dotenv
 from flask import Flask, request, Response
 
@@ -29,6 +30,8 @@ def koi_precheck():
             status=403,
             mimetype="application/json",
         )
+
+    time.sleep(10)
 
     return Response(
         json.dumps({"status": "success", "message": "Precheck successful"}),
