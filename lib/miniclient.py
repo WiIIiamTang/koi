@@ -31,8 +31,8 @@ class MiniClient:
 
         return wrapper
 
-    @handle_exceptions()
-    @timebreak()
+    @handle_exceptions
+    @timebreak
     def send_message(self, channel_id, message):
         ch_id = channel_id or self.default_channel_id
         self.logger.info(f"Sending message to {ch_id} with content {message}")
@@ -43,8 +43,8 @@ class MiniClient:
         )
         self.logger.info(f"Response: {r.status_code} {r.content}")
 
-    @handle_exceptions()
-    @timebreak()
+    @handle_exceptions
+    @timebreak
     def read_messages(self, channel_id, limit=2):
         ch_id = channel_id or self.default_channel_id
         self.logger.info(f"Reading {limit} messages from {ch_id}")
