@@ -8,6 +8,11 @@ load_dotenv()
 app = Flask(__name__)
 
 
+@app.route("/health/healthping", methods=["GET"])
+def health():
+    return "OK", 200
+
+
 @app.post("/prechecker/precheck/koi")
 def koi_precheck():
     """
