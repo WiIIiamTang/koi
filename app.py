@@ -65,7 +65,7 @@ def koi_precheck():
     tasks.notify_precheck_end(
         logger=logging.getLogger("precheck"),
         client=client,
-        message=f"Precheck tasks {'failed. Release will be aborted' if not save_success else 'succeeded, bot will restart'} `{data['commit_sha']}` `{data['commit_message']}`",  # noqa
+        message=f"Precheck tasks {'failed. Release will be aborted' if not save_success else 'succeeded, bot will restart. Please wait while the new release is deployed'} `{data['commit_sha']}` `{data['commit_message']}`",  # noqa
     )
 
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
