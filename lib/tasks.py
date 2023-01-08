@@ -9,9 +9,13 @@ def notify_precheck_start(logger, client, channel_id=None, message=""):
 def save_bot_data(logger, client, channel_id=None):
     logger.info("Saving bot data")
     client.send_message(channel_id=channel_id, message=".flush_cog_cache")
+    time.sleep(1)
     client.send_message(channel_id=channel_id, message=".force_cog_cache_sync")
+    time.sleep(1)
     client.send_message(channel_id=channel_id, message=".force_db_archive_sync")
+    time.sleep(1)
     client.send_message(channel_id=channel_id, message=".force_db_sync")
+    time.sleep(1)
 
     messages = client.read_messages(channel_id=channel_id, limit=20)
     for message in messages:
