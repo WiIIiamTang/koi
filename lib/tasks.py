@@ -36,6 +36,12 @@ def notify_precheck_end(logger, client, channel_id=None, message=""):
 def check_bot_startup_ready(logger, client, channel_id=None):
     logger.info("Checking bot startup ready")
     client.send_message(channel_id=channel_id, message=".addpath /app/custom_cogs")
+    client.send_message(channel_id=channel_id, message=".load audio")
+    time.sleep(1)
+    client.send_message(channel_id=channel_id, message=".load alias")
+    time.sleep(1)
+    client.send_message(channel_id=channel_id, message=".alias global add p play")
+    client.send_message(channel_id=channel_id, message=".alias global add join summon")
     client.send_message(channel_id=channel_id, message=".load custompics")
     time.sleep(10)
     client.send_message(channel_id=channel_id, message=".koibotping")
