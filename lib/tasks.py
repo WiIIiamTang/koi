@@ -8,8 +8,9 @@ def notify_precheck_start(logger, client, channel_id=None, message=""):
 
 def save_bot_data(logger, client, channel_id=None):
     logger.info("Saving bot data")
+    # TODO: flush cog cache may take a long time and not work very well
     client.send_message(channel_id=channel_id, message=".flush_cog_cache")
-    time.sleep(1)
+    time.sleep(2)
     client.send_message(channel_id=channel_id, message=".force_cog_cache_sync")
     time.sleep(1)
     client.send_message(channel_id=channel_id, message=".force_db_archive_sync")
