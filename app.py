@@ -119,7 +119,8 @@ def koi_postcheck():
 
     if response:
         client.send_message(
-            message="All messages will be deleted in a couple of hours. Happy release!"
+            channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
+            message="All messages will be deleted in a couple of hours. Happy release!",
         )
         return Response(
             json.dumps(
@@ -135,7 +136,8 @@ def koi_postcheck():
         )
     else:
         client.send_message(
-            message="I didn't detect the bot online. It looks like the release failed?"
+            channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
+            message="I didn't detect the bot online. It looks like the release failed?",
         )
         return Response(
             json.dumps(
