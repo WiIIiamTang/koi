@@ -1,6 +1,7 @@
 import json
 import os
 import time
+from datetime import datetime
 from dotenv import load_dotenv
 from flask import Flask, request, Response
 
@@ -31,10 +32,19 @@ def koi_precheck():
             mimetype="application/json",
         )
 
+    timenow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     time.sleep(10)
+    timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     return Response(
-        json.dumps({"status": "success", "message": "Precheck successful"}),
+        json.dumps(
+            {
+                "status": "success",
+                "message": "Precheck successful",
+                "timestarted": timenow,
+                "timefinished": timefinished,
+            }
+        ),
         status=200,
         mimetype="application/json",
     )
