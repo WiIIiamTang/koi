@@ -42,6 +42,7 @@ def check_bot_startup_ready(logger, client, channel_id=None):
     time.sleep(1)
     client.send_message(channel_id=channel_id, message=".alias global add p play")
     client.send_message(channel_id=channel_id, message=".alias global add join summon")
+    client.send_message(channel_id=channel_id, message=".audioset emptydisconnect 10")
     client.send_message(channel_id=channel_id, message=".load custompics")
     time.sleep(10)
     client.send_message(channel_id=channel_id, message=".koibotping")
