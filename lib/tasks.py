@@ -15,7 +15,9 @@ def save_bot_data(logger, client, channel_id=None):
 
     messages = client.read_messages(channel_id=channel_id, limit=20)
     for message in messages:
-        if message["content"].startswith("Done"):
+        if message["author"]["username"] == "billbot" and message["content"].startswith(
+            "Done"
+        ):
             return True
 
     return False
@@ -32,7 +34,9 @@ def check_bot_startup_ready(logger, client, channel_id=None):
     time.sleep(1)
     messages = client.read_messages(channel_id=channel_id, limit=4)
     for message in messages:
-        if message["content"].startswith("Koibot received"):
+        if message["author"]["username"] == "billbot" and message["content"].startswith(
+            "Koibot received"
+        ):
             return True
 
     return False
