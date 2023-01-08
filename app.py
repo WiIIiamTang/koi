@@ -108,8 +108,10 @@ def koi_postcheck():
     if type(data) is not dict:
         data = json.loads(data)
 
-    logging.info(f"Bot is starting up at {data.get('time_started')}")
-    logging.info("Waiting 20 seconds for bot to start up...")
+    logger = logging.getLogger("postcheck")
+
+    logger.info(f"Bot is starting up at {data.get('time_started')}")
+    logger.info("Waiting 20 seconds for bot to start up...")
     time.sleep(20)
 
     # start postcheck
