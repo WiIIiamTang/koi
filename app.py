@@ -48,6 +48,8 @@ def koi_precheck():
     timenow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # get the data from the request
     data = request.get_json()
+    if type(data) is not dict:
+        data = json.loads(data)
     logging.info(f"Received {data}")
 
     # start precheck
