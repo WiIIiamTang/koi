@@ -50,7 +50,7 @@ def koi_precheck():
     data = request.get_json()
     tasks.notify_precheck_start(
         client,
-        f"New commit was pushed for release: {data['commit_message']} - starting precheck tasks",
+        f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",
     )
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
