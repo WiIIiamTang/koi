@@ -48,13 +48,22 @@ def koi_precheck():
     timenow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # get the data from the request
     data = request.get_json()
+    logging.info(f"Received {data}")
 
     # start precheck
     tasks.notify_precheck_start(
         logger=logging.getLogger("precheck"),
         client=client,
-        message=f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",
+        message=f"New commit was pushed for release: `{data['commit_sha']}` {data['commit_message']} - starting precheck tasks",  # noqa
     )
+    # tasks.save_bot_data(logger=logging.getLogger("precheck"), client=client)
+    save_success = True
+    tasks.notify_precheck_end(
+        logger=logging.getLogger("precheck"),
+        client=client,
+        message=f"Precheck tasks {'failed. Release will be aborted' if not save_success else 'succeeded, bot will restart'}",  # noqa
+    )
+
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     return Response(
