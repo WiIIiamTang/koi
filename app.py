@@ -58,6 +58,7 @@ def koi_precheck():
         client=client,
         message=f"New commit was pushed for release: `{data['commit_sha']}` `{data['commit_message']}` - starting precheck tasks",  # noqa
     )
+    time.sleep(3)
     save_success = tasks.save_bot_data(
         logger=logging.getLogger("precheck"), client=client
     )
