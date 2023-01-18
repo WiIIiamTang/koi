@@ -124,7 +124,7 @@ def koi_postcheck():
     if response:
         client.send_message(
             channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
-            message="Post-setup done. My messages will be deleted in a couple of hours. Happy release!",
+            message="Post-setup done - it looks like everything's ok. Happy release!",
         )
         return Response(
             json.dumps(
