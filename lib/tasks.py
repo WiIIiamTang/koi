@@ -35,6 +35,10 @@ def notify_precheck_end(logger, client, channel_id=None, message=""):
 
 def check_bot_startup_ready(logger, client, channel_id=None):
     logger.info("Checking bot startup ready")
+    client.send_message(
+        channel_id=channel_id,
+        message="Received bot on alert, starting postcheck tasks:",
+    )
     client.send_message(channel_id=channel_id, message=".addpath /app/custom_cogs")
     client.send_message(channel_id=channel_id, message=".load audio")
     time.sleep(1)
