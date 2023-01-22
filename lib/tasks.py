@@ -25,13 +25,13 @@ def save_bot_data(logger, client, channel_id=None):
     client.send_message(channel_id=channel_id, message=".flush_cog_cache")
     time.sleep(2)
     client.send_message(channel_id=channel_id, message=".force_cog_cache_sync")
-    time.sleep(1)
+    time.sleep(3)
     client.send_message(channel_id=channel_id, message=".force_db_archive_sync")
-    time.sleep(1)
+    time.sleep(3)
     client.send_message(channel_id=channel_id, message=".force_db_sync")
-    time.sleep(1)
+    time.sleep(3)
 
-    messages = client.read_messages(channel_id=channel_id, limit=8)
+    messages = client.read_messages(channel_id=channel_id, limit=12)
     done_count = 0
     for message in messages:
         if message["author"]["username"] == "billbot" and message["content"].startswith(
