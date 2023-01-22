@@ -11,7 +11,10 @@ def notify_precheck_start(logger, client, channel_id=None, message="", commit_sh
         if message["author"]["username"] == "billbot" and message["content"].startswith(
             "Koibot received"
         ):
-            client.send_message(f"Signing off on `{commit_sha}` for @WiIIiamTang")
+            client.send_message(
+                channel_id=channel_id,
+                message=f"Signing off on `{commit_sha}` for @WiIIiamTang",
+            )
             return True
     return False
 
@@ -36,7 +39,7 @@ def save_bot_data(logger, client, channel_id=None):
         ):
             done_count += 1
 
-    return done_count >= 4
+    return done_count >= 3
 
 
 def notify_precheck_end(logger, client, channel_id=None, message=""):
