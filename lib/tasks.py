@@ -1,9 +1,19 @@
 import time
 
 
-def notify_precheck_start(logger, client, channel_id=None, message=""):
+def notify_precheck_start(logger, client, channel_id=None, message="", commit_sha=""):
     logger.info("Sending precheck start notification")
     client.send_message(channel_id=channel_id, message=message)
+    client.send_message(channel_id=channel_id, message=".koibotping")
+    time.sleep(2)
+    messages = client.read_messages(channel_id=channel_id, limit=2)
+    for message in messages:
+        if message["author"]["username"] == "billbot" and message["content"].startswith(
+            "Koibot received"
+        ):
+            client.send_message(f"Signing off on `{commit_sha}` for @WiIIiamTang")
+            return True
+    return False
 
 
 def save_bot_data(logger, client, channel_id=None):
