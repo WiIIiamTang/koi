@@ -19,13 +19,14 @@ def save_bot_data(logger, client, channel_id=None):
     time.sleep(1)
 
     messages = client.read_messages(channel_id=channel_id, limit=8)
+    done_count = 0
     for message in messages:
         if message["author"]["username"] == "billbot" and message["content"].startswith(
             "Done"
         ):
-            return True
+            done_count += 1
 
-    return False
+    return done_count >= 4
 
 
 def notify_precheck_end(logger, client, channel_id=None, message=""):
