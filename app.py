@@ -75,12 +75,6 @@ def koi_precheck():
 
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    if save_success and os.environ.get("PUB_NOTIF_CHANNEL_ID") is not None:
-        client.send_message(
-            channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
-            message=f"Billbot auto switchover was triggered on `release`: <t:{int(datetime.now().timestamp())}:R>",  # noqa
-        )
-
     return Response(
         json.dumps(
             {
@@ -153,7 +147,7 @@ def koi_postcheck():
 
             client.send_message(
                 channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
-                message=f"Done, next scheduled downtime: <t:{int(next_month)}:F>",
+                message=f"Auto switchover complete, next scheduled downtime: <t:{int(next_month)}:F>",
             )
         return Response(
             json.dumps(
