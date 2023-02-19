@@ -146,7 +146,7 @@ def koi_postcheck():
             ).timestamp()
 
             client.send_message(
-                channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
+                channel_id=os.environ.get("PUB_NOTIF_CHANNEL_ID"),
                 message=f"billbot auto switchover complete, next scheduled downtime: <t:{int(next_month)}:F>",
             )
         return Response(
