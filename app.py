@@ -2,7 +2,7 @@ import json
 import os
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from flask import Flask, request, Response
 
@@ -75,6 +75,12 @@ def koi_precheck():
 
     timefinished = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    if save_success and os.environ.get("PUB_NOTIF_CHANNEL_ID") is not None:
+        client.send_message(
+            channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
+            message=f"Billbot switchover was triggered for the release channel: <t:{int(datetime.now().timestamp())}:R>",  # noqa
+        )
+
     return Response(
         json.dumps(
             {
@@ -131,6 +137,24 @@ def koi_postcheck():
             channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
             message="Post-setup done - it looks like everything's ok. Happy release!",
         )
+
+        if os.environ.get("PUB_NOTIF_CHANNEL_ID") is not None:
+            # Get the unix timestamp for the next month, on the 20th day.
+            new_year = (datetime.now().month + 1) > 12
+            next_month = (datetime.now().month + 1) % 12
+            next_month = 1 if next_month == 0 else next_month
+
+            # get the date for the 20th of the next_month
+            next_month = datetime(
+                datetime.now().year + 1 if new_year else datetime.now().year,
+                next_month,
+                20,
+            ).timestamp()
+
+            client.send_message(
+                channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
+                message=f"Done, next scheduled downtime: <t:{int(next_month)}:F>",
+            )
         return Response(
             json.dumps(
                 {
