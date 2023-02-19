@@ -78,7 +78,7 @@ def koi_precheck():
     if save_success and os.environ.get("PUB_NOTIF_CHANNEL_ID") is not None:
         client.send_message(
             channel_id=os.environ.get("NOTIF_CHANNEL_ID"),
-            message=f"Billbot switchover was triggered for the release channel: <t:{int(datetime.now().timestamp())}:R>",  # noqa
+            message=f"Billbot auto switchover was triggered on `release`: <t:{int(datetime.now().timestamp())}:R>",  # noqa
         )
 
     return Response(
